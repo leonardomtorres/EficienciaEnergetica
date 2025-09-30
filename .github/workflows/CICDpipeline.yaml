@@ -42,14 +42,15 @@ jobs:
         run: mvn test
 
   deploy-staging:
-    name: Deploy Staging
-  runs-on: ubuntu-latest
+  name: Deploy Staging
+  runs-on: ubuntu-latest       # <- obrigatório
   needs: test
-  if: github.ref_name == 'staging'   # usa github.ref_name ao invés de github.ref
+  if: github.ref_name == 'staging'  # <- condição para rodar apenas no branch staging
   steps:
     - name: Deploy para Staging
       run: |
         echo "Fazendo deploy no ambiente de staging..."
+        # Aqui vai o seu comando real de deploy
 
   deploy-prod:
     name: Deploy Produção
