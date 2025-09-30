@@ -6,6 +6,9 @@ on:
       - main
       - staging
   pull_request:
+    branches:
+      - main
+      - staging
 
 jobs:
   build:
@@ -42,21 +45,22 @@ jobs:
         run: mvn test
 
   deploy-staging:
-  name: Deploy Staging
-  runs-on: ubuntu-latest       # <- obrigatório
-  needs: test
-  if: github.ref_name == 'staging'  # <- condição para rodar apenas no branch staging
-  steps:
-    - name: Deploy para Staging
-      run: |
-        echo "Fazendo deploy no ambiente de staging..."
-        # Aqui vai o seu comando real de deploy
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref_name == 'staging'
+    steps:
+      - name: Deploy para Staging
+        run: |
+          echo "Fazendo deploy no ambiente de staging..."
+          # Substitua pelo comando real de deploy
+          # Exemplo: scp target/meu-app.jar user@staging-server:/var/www/app
 
   deploy-prod:
     name: Deploy Produção
     runs-on: ubuntu-latest
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref_name == 'main'
     steps:
       - name: Deploy para Produção
         run: |
